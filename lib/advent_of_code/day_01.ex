@@ -12,8 +12,8 @@ defmodule AdventOfCode.Day01 do
   end
 
   @replacements_map %{
-      "one" => "o1n",
-      "two" => "t2w",
+      "one" => "o1e",
+      "two" => "t2o",
       "three" => "t3e",
       "four" => "f4r",
       "five" => "f5e",
