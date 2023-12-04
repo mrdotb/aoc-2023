@@ -32,9 +32,7 @@ defmodule AdventOfCode.Day02 do
     end)
   end
 
-  def part1(_args) do
-    input = AdventOfCode.Input.get!(2, 2023)
-
+  def part1(input) do
     elf_input = %{red: 12, green: 13, blue: 14}
 
     input
@@ -50,8 +48,7 @@ defmodule AdventOfCode.Day02 do
     end)
   end
 
-  def part2(_args) do
-    input = AdventOfCode.Input.get!(2, 2023)
+  def part2(input) do
 
     input
     |> String.split("\n", trim: true)

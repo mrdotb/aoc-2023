@@ -24,9 +24,7 @@ defmodule AdventOfCode.Day03 do
     end)
   end
 
-  def part1(_args) do
-    input = AdventOfCode.Input.get!(3, 2023)
-
+  def part1(input) do
     lines = String.split(input, "\n", trim: true)
 
     lines_tuple = List.to_tuple(lines)
@@ -86,9 +84,7 @@ defmodule AdventOfCode.Day03 do
     end
   end
 
-  def part2(_args) do
-    input = AdventOfCode.Input.get!(3, 2023)
-
+  def part2(input) do
     lines = String.split(input, "\n", trim: true)
 
     lines_tuple =
