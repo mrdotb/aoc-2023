@@ -2,17 +2,15 @@ defmodule AdventOfCode.Day04 do
   defp parse_card(line) do
     ["Card" <> id, rest] = String.split(line, ":")
     id = id |> String.trim() |> String.to_integer()
-    [winnings, numbers] = String.split(rest, "|")
 
-    winnings =
-      winnings
-      |> String.split(" ", trim: true)
-      |> Enum.map(&String.to_integer/1)
-
-    numbers =
-      numbers
-      |> String.split(" ", trim: true)
-      |> Enum.map(&String.to_integer/1)
+    [winnings, numbers] =
+      rest
+      |> String.split("|")
+      |> Enum.map(fn part ->
+        part
+        |> String.split(" ", trim: true)
+        |> Enum.map(&String.to_integer/1)
+      end)
 
     {id, winnings, numbers}
   end
@@ -47,27 +45,24 @@ defmodule AdventOfCode.Day04 do
     |> Enum.sum()
   end
 
-  defp get_copy(cards, cards_map, max_id) do
-    cards
-    |> Enum.map(fn
-      {id, 0} ->
-        {id, 0}
+  defp count_cards_and_copies(cards, cards_map, max_id) do
+    Enum.reduce(cards, 0, fn
+      {_id, 0}, acc ->
+        acc + 1
 
-      {^max_id, _} ->
-        {max_id, 0}
+      {^max_id, _}, acc ->
+        acc + 1
 
-      {id, win} ->
+      {id, win}, acc ->
         until = if(id + win > max_id, do: max_id, else: id + win)
 
-        copy =
+        count =
           (id + 1)..until
           |> Enum.map(&Map.get(cards_map, &1))
-          |> get_copy(cards_map, max_id)
-          |> List.flatten()
+          |> count_cards_and_copies(cards_map, max_id)
 
-        [{id, win} | copy]
+        count + acc + 1
     end)
-    |> List.flatten()
   end
 
   def part2(input) do
@@ -81,8 +76,6 @@ defmodule AdventOfCode.Day04 do
     cards_map = cards |> Enum.map(fn {id, win} -> {id, {id, win}} end) |> Map.new()
     {max_id, _} = List.last(cards)
 
-    cards
-    |> get_copy(cards_map, max_id)
-    |> Enum.count()
+    count_cards_and_copies(cards, cards_map, max_id)
   end
 end
