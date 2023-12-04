@@ -49,7 +49,6 @@ defmodule AdventOfCode.Day02 do
   end
 
   def part2(input) do
-
     input
     |> String.split("\n", trim: true)
     |> Enum.reduce(0, fn line, acc ->

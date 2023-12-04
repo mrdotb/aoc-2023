@@ -10,6 +10,7 @@ defmodule AdventOfCode.Day04 do
         part
         |> String.split(" ", trim: true)
         |> Enum.map(&String.to_integer/1)
+        |> MapSet.new()
       end)
 
     {id, winnings, numbers}
@@ -18,24 +19,21 @@ defmodule AdventOfCode.Day04 do
   defp win_1(card) do
     {_id, winnings, numbers} = card
 
-    Enum.reduce(winnings, 0, fn winning, acc ->
-      numbers
-      |> Enum.filter(&(&1 == winning))
-      |> Enum.reduce(acc, fn _, acc -> if(acc == 0, do: 1, else: acc * 2) end)
+    winnings
+    |> MapSet.intersection(numbers)
+    |> MapSet.size()
+    |> then(fn
+      0 -> 0
+      n -> 2 ** (n - 1)
     end)
   end
 
   defp win_2(card) do
     {_id, winnings, numbers} = card
 
-    Enum.reduce(winnings, 0, fn winning, acc ->
-      count =
-        numbers
-        |> Enum.filter(&(&1 == winning))
-        |> Enum.count()
-
-      acc + count
-    end)
+    winnings
+    |> MapSet.intersection(numbers)
+    |> MapSet.size()
   end
 
   def part1(input) do
