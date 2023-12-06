@@ -3,19 +3,34 @@ defmodule AdventOfCode.Day06Test do
 
   import AdventOfCode.Day06
 
-  @tag :skip
-  test "part1" do
-    input = nil
-    result = part1(input)
+  @test_input """
+  Time:      7  15   30
+  Distance:  9  40  200
+  """
 
-    assert result
+  test "part1 test input" do
+    result = part1(@test_input)
+
+    assert result == 288
   end
 
-  @tag :skip
+  test "part1" do
+    input = AdventOfCode.Input.get!(6, 2023)
+    result = part1(input)
+
+    assert result == 1_731_600
+  end
+
+  test "part2 test input" do
+    result = part2(@test_input)
+
+    assert result == 71503
+  end
+
   test "part2" do
-    input = nil
+    input = AdventOfCode.Input.get!(6, 2023)
     result = part2(input)
 
-    assert result
+    assert result == 40_087_680
   end
 end
